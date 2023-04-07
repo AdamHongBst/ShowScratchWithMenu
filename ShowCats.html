@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Random Cat Images</title>
+    <style>
+        #cat-images {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+
+        #cat-images img {
+            margin: 0 10px;
+            max-width: 50%;
+            max-height: 100%;
+        }
+
+        
+        #cat-button {
+            display: block;
+            margin: 0 auto;
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cat-images">
+        <img id="cat1" src="" alt="Cat 1">
+        <img id="cat2" src="" alt="Cat 2">
+    </div>
+    <div>
+        <button id="cat-button" class="container">Change cats</button>
+    </div>
+
+    <script>
+        const catButton = document.getElementById("cat-button");
+
+        function getRandomCats() {
+            const endpoint = "https://api.thecatapi.com/v1/images/search?limit=2";
+            fetch(endpoint)
+                .then(response => response.json())
+                .then(data => {
+                    const images = data.map(cat => cat.url);
+                    displayCats(images);
+                })
+                .catch(error => console.log(error));
+        }
+
+        function displayCats(images) {
+            document.getElementById("cat1").src = images[0];
+            document.getElementById("cat2").src = images[1];
+        }
+
+        catButton.addEventListener("click", getRandomCats);
+
+        getRandomCats();
+    </script>
+</body>
+
+</html>
