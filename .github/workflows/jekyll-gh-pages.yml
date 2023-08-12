@@ -1,11 +1,9 @@
-name: Deploy Jekyll with GitHub Pages dependencies preinstalled
+name: Deploy specific HTML page to GitHub Pages
 
 on:
   push:
     branches:
       - main
-
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -17,34 +15,39 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Build job (Optional)
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          source: ./
-          destination: ./_site
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+          node-version: "14"
+      - name: Install Dependencies
+        run: npm install
+      - name: Build
+        run: npm run build  # Replace with your build command if needed
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish-dir: ./dist  # Replace with your build output directory
+          publish-branch: gh-pages
 
+  # Deployment job
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: https://adamhongbst.github.io/ShowUltraman/ShowScratchWithMenu.html
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Deploy specific HTML page
+        run: |
+          mkdir -p ${{ github.workspace }}/.github/pages
+          echo "<meta http-equiv=\"refresh\" content=\"0; url=https://adamhongbst.github.io/ShowUltraman/ShowScratchWithMenu.html\">" > ${{ github.workspace }}/.github/pages/index.html
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-
-      # Add a step to redirect to ShowUltraman/ShowScratchWithMenu.html
-      - name: Redirect to ShowUltraman/ShowScratchWithMenu.html
-        run: |
-          mkdir -p ./.github/workflows
-          echo '<meta http-equiv="refresh" content="0; url=ShowUltraman/ShowScratchWithMenu.html">' > ./_site/index.html
