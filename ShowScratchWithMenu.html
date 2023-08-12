@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch作品展示页面</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            /* 首次加载时隐藏滚动条 */
+        }
+
+        .header {
+            background: linear-gradient(to right, #FFD700, #FFA500);
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu {
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
+            padding: 10px 0;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu button {
+            background-color: #FFA500;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .content {
+            background: linear-gradient(to bottom, #F0F0F0, #C0C0C0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 200px);
+            /* 调整为适应底部菜单 */
+            overflow-y: auto;
+        }
+
+        #scratchIframe {
+            width: 485px;
+            height: 402px;
+            border: none;
+        }
+        .foot {
+            background: linear-gradient(to right, #FFD700, #FFA500);
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        }        
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Scratch作品展示页面</h1>
+    </div>
+    <div class="menu">
+        <button onclick="loadMenu1()">The Forest</button>
+        <button onclick="loadMenu2()">Marvel Legends</button>
+        <button onclick="loadMenu3()">OC ARTS</button>
+    </div>
+    <div class="separator"></div>
+
+    <div class="content" id="contentArea">
+        <!-- Content will be loaded here -->
+    </div>
+    <div class="foot">
+        @2023 荣耀属于思齐奥特曼
+    </div>
+
+    <script>
+        function loadMenu1() {
+            document.getElementById('contentArea').innerHTML = '<iframe src="https://scratch.mit.edu/projects/874126090/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>';
+        }
+
+        function loadMenu2() {
+            document.getElementById('contentArea').innerHTML = '<iframe src="https://scratch.mit.edu/projects/803323236/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>';
+        }
+
+        function loadMenu3() {
+            document.getElementById('contentArea').innerHTML = '<iframe src="https://scratch.mit.edu/projects/749668962/embed" allowtransparency="true" width="485" height="402" frameborder="0" scrolling="no" allowfullscreen></iframe>';
+        }
+        window.onload = function () {
+            loadMenu2(); // 默认加载菜单1的内容
+        };
+    </script>
+
+</body>
+
+</html>
